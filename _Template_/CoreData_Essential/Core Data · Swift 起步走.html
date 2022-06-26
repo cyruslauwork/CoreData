@@ -1,0 +1,1899 @@
+<!DOCTYPE html>
+<!-- saved from url=(0066)https://itisjoe.gitbooks.io/swiftgo/content/database/coredata.html -->
+<html lang="zh"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        
+        
+        <title>Core Data · Swift 起步走</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        <meta name="author" content="Hsin">
+        
+        
+    
+    <link rel="stylesheet" href="./Core Data · Swift 起步走_files/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="./Core Data · Swift 起步走_files/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="./Core Data · Swift 起步走_files/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="./Core Data · Swift 起步走_files/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="./Core Data · Swift 起步走_files/website(1).css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="https://itisjoe.gitbooks.io/swiftgo/content/gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="https://gstatic.gitbook.com/images/b1c4c86ca817a71628d2debe73be9a64.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="https://itisjoe.gitbooks.io/swiftgo/content/apps/apps.html">
+    
+    
+    <link rel="prev" href="https://itisjoe.gitbooks.io/swiftgo/content/database/sqlite.html">
+    
+
+    
+<style>
+    .book .book-summary .book-search,
+    .book .book-summary ul.summary {
+        position: relative;
+        top: auto;
+        left: auto;
+        right: auto;
+        bottom: auto;
+    }
+    .book-summary {
+        display: -webkit-box;
+        display: -moz-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        flex-direction: column;
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+        overflow-y: auto;
+    }
+    .book-summary > nav {
+        flex: 1 1 auto;
+        overflow-y: auto;
+        overflow-y: overlay;
+    }
+    .gl-wrapper {
+        margin: 0;
+        display: block;
+        padding: 0;
+        position: relative;
+        line-height: 15px;
+        background: #fafafa;
+    }
+    .gl-wrapper:before {
+        background: -webkit-linear-gradient(to bottom, rgba(250,250,250,0) 0%, #fafafa 100%);
+        background: -moz-linear-gradient(to bottom, rgba(250,250,250,0) 0%, #fafafa 100%);
+        top: -24px;
+        width: 100%;
+        height: 24px;
+        content: "";
+        display: block;
+        position: absolute;
+        background: linear-gradient(to bottom, rgba(250,250,250,0) 0%, #fafafa 100%);
+    }
+    .book.color-theme-1 .gl-wrapper {
+        background: #121212;
+    }
+    .book.color-theme-1 .gl-wrapper:before {
+        background: -webkit-linear-gradient(to bottom, rgba(18,18,18,0) 0%, #121212 100%);
+        background: -moz-linear-gradient(to bottom, rgba(18,18,18,0) 0%, #121212 100%);
+        background: linear-gradient(to bottom, rgba(18,18,18,0) 0%, #121212 100%);
+    }
+    .book.color-theme-2 .gl-wrapper {
+        background: #2e3243;
+    }
+    .book.color-theme-2 .gl-wrapper:before {
+        background: -webkit-linear-gradient(to bottom, rgba(46,50,67,0) 0%, #2e3243 100%);
+        background: -moz-linear-gradient(to bottom, rgba(46,50,67,0) 0%, #2e3243 100%);
+        background: linear-gradient(to bottom, rgba(46,50,67,0) 0%, #2e3243 100%);
+    }
+    .gl-wrapper .gitbook-link {
+        display: -webkit-box;
+        display: -moz-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        color: #9DAAB6;
+        margin: 16px;
+        display: flex;
+        padding: 0;
+        align-items: center;
+        margin-left: 32px;
+        padding-top: 8px;
+        padding-left: 16px;
+        border-radius: 3px;
+        padding-right: 16px;
+        padding-bottom: 8px;
+        text-decoration: none;
+        background-color: #E6ECF1;
+        -webkit-box-align: center;
+    }
+    .gl-wrapper .tm-logo {
+        margin: 0;
+        display: block;
+        padding: 0;
+        font-size: 40px;
+    }
+    .gl-wrapper .tm-content {
+        flex: 1;
+        margin: 0;
+        display: block;
+        padding: 0;
+        padding-left: 16px;
+    }
+    .gl-wrapper .tm-content .container {
+        margin: 0;
+        display: block;
+        padding: 0;
+    }
+    .gl-wrapper .tm-content .tm-container .tm-text {
+        font-size: 12px;
+        font-family: "Roboto", sans-serif;
+        font-weight: 400;
+        line-height: 1.625;
+    }
+</style></head>
+    <body data-new-gr-c-s-check-loaded="14.1062.0" data-gr-ext-installed="">
+        
+<div class="book font-size-2 font-family-1">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="輸入並搜尋">
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+    
+        
+        <li>
+            <a href="https://www.gitbook.com/book/itisjoe/swiftgo" target="_blank" class="custom-link">Swift 起步走</a>
+        </li>
+    
+    
+
+    
+    <li class="divider"></li>
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="https://itisjoe.gitbooks.io/swiftgo/content/">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="../ch1/ch1.html">
+            
+                <a href="https://itisjoe.gitbooks.io/swiftgo/content/ch1/ch1.html">
+            
+                    
+                    Swift 基礎
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="../ch1/basics.html">
+            
+                <a href="https://itisjoe.gitbooks.io/swiftgo/content/ch1/basics.html">
+            
+                    
+                    基本知識
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2" data-path="../ch1/types.html">
+            
+                <a href="https://itisjoe.gitbooks.io/swiftgo/content/ch1/types.html">
+            
+                    
+                    基本型別
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3" data-path="../ch1/basic_operators.html">
+            
+                <a href="https://itisjoe.gitbooks.io/swiftgo/content/ch1/basic_operators.html">
+            
+                    
+                    基本運算子
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.4" data-path="../ch1/strings_characters.html">
+            
+                <a href="https://itisjoe.gitbooks.io/swiftgo/content/ch1/strings_characters.html">
+            
+                    
+                    字串及字元
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.5" data-path="../ch1/collection_types.html">
+            
+                <a href="https://itisjoe.gitbooks.io/swiftgo/content/ch1/collection_types.html">
+            
+                    
+                    集合型別
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.6" data-path="../ch1/control_flow.html">
+            
+                <a href="https://itisjoe.gitbooks.io/swiftgo/content/ch1/control_flow.html">
+            
+                    
+                    控制流程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.7" data-path="../ch1/functions.html">
+            
+                <a href="https://itisjoe.gitbooks.io/swiftgo/content/ch1/functions.html">
+            
+                    
+                    函式
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.8" data-path="../ch1/closures.html">
+            
+                <a href="https://itisjoe.gitbooks.io/swiftgo/content/ch1/closures.html">
+            
+                    
+                    閉包
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="../ch2/ch2.html">
+            
+                <a href="https://itisjoe.gitbooks.io/swiftgo/content/ch2/ch2.html">
+            
+                    
+                    Swift 進階
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.1" data-path="../ch2/enumerations.html">
+            
+                <a href="https://itisjoe.gitbooks.io/swiftgo/content/ch2/enumerations.html">
+            
+                    
+                    列舉
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.2" data-path="../ch2/classes_structures.html">
+            
+                <a href="https://itisjoe.gitbooks.io/swiftgo/content/ch2/classes_structures.html">
+            
+                    
+                    類別及結構
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.3" data-path="../ch2/properties.html">
+            
+                <a href="https://itisjoe.gitbooks.io/swiftgo/content/ch2/properties.html">
+            
+                    
+                    屬性
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4" data-path="../ch2/methods.html">
+            
+                <a href="https://itisjoe.gitbooks.io/swiftgo/content/ch2/methods.html">
+            
+                    
+                    方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.5" data-path="../ch2/subscripts.html">
+            
+                <a href="https://itisjoe.gitbooks.io/swiftgo/content/ch2/subscripts.html">
+            
+                    
+                    下標
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.6" data-path="../ch2/inheritance.html">
+            
+                <a href="https://itisjoe.gitbooks.io/swiftgo/content/ch2/inheritance.html">
+            
+                    
+                    繼承
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.7" data-path="../ch2/initialization_deinitialization.html">
+            
+                <a href="https://itisjoe.gitbooks.io/swiftgo/content/ch2/initialization_deinitialization.html">
+            
+                    
+                    建構過程及解構過程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.8" data-path="../ch2/arc.html">
+            
+                <a href="https://itisjoe.gitbooks.io/swiftgo/content/ch2/arc.html">
+            
+                    
+                    自動參考計數
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.9" data-path="../ch2/optional-chaining.html">
+            
+                <a href="https://itisjoe.gitbooks.io/swiftgo/content/ch2/optional-chaining.html">
+            
+                    
+                    可選鏈
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.10" data-path="../ch2/error-handling.html">
+            
+                <a href="https://itisjoe.gitbooks.io/swiftgo/content/ch2/error-handling.html">
+            
+                    
+                    錯誤處理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.11" data-path="../ch2/type-casting.html">
+            
+                <a href="https://itisjoe.gitbooks.io/swiftgo/content/ch2/type-casting.html">
+            
+                    
+                    型別轉換
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.12" data-path="../ch2/nested-types.html">
+            
+                <a href="https://itisjoe.gitbooks.io/swiftgo/content/ch2/nested-types.html">
+            
+                    
+                    巢狀型別
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.13" data-path="../ch2/extensions.html">
+            
+                <a href="https://itisjoe.gitbooks.io/swiftgo/content/ch2/extensions.html">
+            
+                    
+                    擴展
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.14" data-path="../ch2/protocols.html">
+            
+                <a href="https://itisjoe.gitbooks.io/swiftgo/content/ch2/protocols.html">
+            
+                    
+                    協定
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.15" data-path="../ch2/generics.html">
+            
+                <a href="https://itisjoe.gitbooks.io/swiftgo/content/ch2/generics.html">
+            
+                    
+                    泛型
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.16" data-path="../ch2/access-control.html">
+            
+                <a href="https://itisjoe.gitbooks.io/swiftgo/content/ch2/access-control.html">
+            
+                    
+                    存取控制
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="../uikit/uikit.html">
+            
+                <a href="https://itisjoe.gitbooks.io/swiftgo/content/uikit/uikit.html">
+            
+                    
+                    UIKit
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.1" data-path="../uikit/uikit_intro.html">
+            
+                <a href="https://itisjoe.gitbooks.io/swiftgo/content/uikit/uikit_intro.html">
+            
+                    
+                    UIKit 初探
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.2" data-path="../uikit/uilabel.html">
+            
+                <a href="https://itisjoe.gitbooks.io/swiftgo/content/uikit/uilabel.html">
+            
+                    
+                    文字標籤 UILabel
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.3" data-path="../uikit/uitextfield.html">
+            
+                <a href="https://itisjoe.gitbooks.io/swiftgo/content/uikit/uitextfield.html">
+            
+                    
+                    文字輸入 UITextField
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.4" data-path="../uikit/uitextview.html">
+            
+                <a href="https://itisjoe.gitbooks.io/swiftgo/content/uikit/uitextview.html">
+            
+                    
+                    輸入多行文字 UITextView
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.5" data-path="../uikit/uibutton.html">
+            
+                <a href="https://itisjoe.gitbooks.io/swiftgo/content/uikit/uibutton.html">
+            
+                    
+                    按鈕 UIButton
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.6" data-path="../uikit/uialertcontroller.html">
+            
+                <a href="https://itisjoe.gitbooks.io/swiftgo/content/uikit/uialertcontroller.html">
+            
+                    
+                    提示框 UIAlertController
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.7" data-path="../uikit/uiimageview.html">
+            
+                <a href="https://itisjoe.gitbooks.io/swiftgo/content/uikit/uiimageview.html">
+            
+                    
+                    圖片 UIImageView
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.8" data-path="../uikit/uidatepicker.html">
+            
+                <a href="https://itisjoe.gitbooks.io/swiftgo/content/uikit/uidatepicker.html">
+            
+                    
+                    選取日期時間 UIDatePicker
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.9" data-path="../uikit/uipickerview.html">
+            
+                <a href="https://itisjoe.gitbooks.io/swiftgo/content/uikit/uipickerview.html">
+            
+                    
+                    選擇器 UIPickerView
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.10" data-path="../uikit/uiswitch.html">
+            
+                <a href="https://itisjoe.gitbooks.io/swiftgo/content/uikit/uiswitch.html">
+            
+                    
+                    開關 UISwitch
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.11" data-path="../uikit/uisegmentedcontrol.html">
+            
+                <a href="https://itisjoe.gitbooks.io/swiftgo/content/uikit/uisegmentedcontrol.html">
+            
+                    
+                    分段控制 UISegmentedControl
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.12" data-path="../uikit/uiprogressview.html">
+            
+                <a href="https://itisjoe.gitbooks.io/swiftgo/content/uikit/uiprogressview.html">
+            
+                    
+                    進度條 UIProgressView
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.13" data-path="../uikit/uislider.html">
+            
+                <a href="https://itisjoe.gitbooks.io/swiftgo/content/uikit/uislider.html">
+            
+                    
+                    滑桿 UISlider
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.14" data-path="../uikit/uistepper.html">
+            
+                <a href="https://itisjoe.gitbooks.io/swiftgo/content/uikit/uistepper.html">
+            
+                    
+                    步進器 UIStepper
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.15" data-path="../uikit/uiwebview.html">
+            
+                <a href="https://itisjoe.gitbooks.io/swiftgo/content/uikit/uiwebview.html">
+            
+                    
+                    網頁 UIWebView
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.16" data-path="../uikit/uitableview.html">
+            
+                <a href="https://itisjoe.gitbooks.io/swiftgo/content/uikit/uitableview.html">
+            
+                    
+                    表格 UITableView
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.17" data-path="../uikit/uicollectionview.html">
+            
+                <a href="https://itisjoe.gitbooks.io/swiftgo/content/uikit/uicollectionview.html">
+            
+                    
+                    網格 UICollectionView
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.18" data-path="../uikit/uisearchcontroller.html">
+            
+                <a href="https://itisjoe.gitbooks.io/swiftgo/content/uikit/uisearchcontroller.html">
+            
+                    
+                    搜尋 UISearchController
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.19" data-path="../uikit/uiscrollview.html">
+            
+                <a href="https://itisjoe.gitbooks.io/swiftgo/content/uikit/uiscrollview.html">
+            
+                    
+                    滑動視圖 UIScrollView
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.20" data-path="../uikit/multipages.html">
+            
+                <a href="https://itisjoe.gitbooks.io/swiftgo/content/uikit/multipages.html">
+            
+                    
+                    多頁面
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.21" data-path="../uikit/uinavigationcontroller.html">
+            
+                <a href="https://itisjoe.gitbooks.io/swiftgo/content/uikit/uinavigationcontroller.html">
+            
+                    
+                    導覽控制器 UINavigationController
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.22" data-path="../uikit/uitabbarcontroller.html">
+            
+                <a href="https://itisjoe.gitbooks.io/swiftgo/content/uikit/uitabbarcontroller.html">
+            
+                    
+                    標籤列控制器 UITabBarController
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.23" data-path="../uikit/uigesturerecognizer.html">
+            
+                <a href="https://itisjoe.gitbooks.io/swiftgo/content/uikit/uigesturerecognizer.html">
+            
+                    
+                    手勢 UIGestureRecognizer
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.24" data-path="../uikit/animations.html">
+            
+                <a href="https://itisjoe.gitbooks.io/swiftgo/content/uikit/animations.html">
+            
+                    
+                    簡單動畫 Animations
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.25" data-path="../uikit/nsuserdefaults.html">
+            
+                <a href="https://itisjoe.gitbooks.io/swiftgo/content/uikit/nsuserdefaults.html">
+            
+                    
+                    儲存資訊 NSUserDefaults
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="database.html">
+            
+                <a href="https://itisjoe.gitbooks.io/swiftgo/content/database/database.html">
+            
+                    
+                    資料庫
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.5.1" data-path="sqlite.html">
+            
+                <a href="https://itisjoe.gitbooks.io/swiftgo/content/database/sqlite.html">
+            
+                    
+                    SQLite
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.5.2" data-path="coredata.html">
+            
+                <a href="https://itisjoe.gitbooks.io/swiftgo/content/database/coredata.html">
+            
+                    
+                    Core Data
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="../apps/apps.html">
+            
+                <a href="https://itisjoe.gitbooks.io/swiftgo/content/apps/apps.html">
+            
+                    
+                    iPhone Apps
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.6.1" data-path="../apps/todo/todo.html">
+            
+                <a href="https://itisjoe.gitbooks.io/swiftgo/content/apps/todo/todo.html">
+            
+                    
+                    待辦事項
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.6.1.1" data-path="../apps/todo/intro.html">
+            
+                <a href="https://itisjoe.gitbooks.io/swiftgo/content/apps/todo/intro.html">
+            
+                    
+                    規劃與實作
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.1.2" data-path="../apps/todo/settings.html">
+            
+                <a href="https://itisjoe.gitbooks.io/swiftgo/content/apps/todo/settings.html">
+            
+                    
+                    程式之外的設定
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.1.3" data-path="../apps/todo/sound.html">
+            
+                <a href="https://itisjoe.gitbooks.io/swiftgo/content/apps/todo/sound.html">
+            
+                    
+                    播放音效
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.1.4" data-path="../apps/todo/edituitableview.html">
+            
+                <a href="https://itisjoe.gitbooks.io/swiftgo/content/apps/todo/edituitableview.html">
+            
+                    
+                    UITableView 的編輯模式
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.2" data-path="../apps/taipeitravel/taipeitravel.html">
+            
+                <a href="https://itisjoe.gitbooks.io/swiftgo/content/apps/taipeitravel/taipeitravel.html">
+            
+                    
+                    遊玩臺北
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.6.2.1" data-path="../apps/taipeitravel/intro.html">
+            
+                <a href="https://itisjoe.gitbooks.io/swiftgo/content/apps/taipeitravel/intro.html">
+            
+                    
+                    規劃與實作
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.2.2" data-path="../apps/taipeitravel/fetchdataandstorage.html">
+            
+                <a href="https://itisjoe.gitbooks.io/swiftgo/content/apps/taipeitravel/fetchdataandstorage.html">
+            
+                    
+                    取得遠端 API 資料並儲存
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.2.3" data-path="../apps/taipeitravel/map.html">
+            
+                <a href="https://itisjoe.gitbooks.io/swiftgo/content/apps/taipeitravel/map.html">
+            
+                    
+                    地圖與定位
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.3" data-path="../apps/money/money.html">
+            
+                <a href="https://itisjoe.gitbooks.io/swiftgo/content/apps/money/money.html">
+            
+                    
+                    記帳
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.6.3.1" data-path="../apps/money/intro.html">
+            
+                <a href="https://itisjoe.gitbooks.io/swiftgo/content/apps/money/intro.html">
+            
+                    
+                    規劃與實作
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="../more/more.html">
+            
+                <a href="https://itisjoe.gitbooks.io/swiftgo/content/more/more.html">
+            
+                    
+                    補充
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.7.1" data-path="../more/xcode_intro.html">
+            
+                <a href="https://itisjoe.gitbooks.io/swiftgo/content/more/xcode_intro.html">
+            
+                    
+                    Xcode 介紹
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.7.1.1" data-path="../more/xcode_install.html">
+            
+                <a href="https://itisjoe.gitbooks.io/swiftgo/content/more/xcode_install.html">
+            
+                    
+                    安裝 Xcode
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.1.2" data-path="../more/open_playground.html">
+            
+                <a href="https://itisjoe.gitbooks.io/swiftgo/content/more/open_playground.html">
+            
+                    
+                    開啟 playground
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.1.3" data-path="../more/open_project.html">
+            
+                <a href="https://itisjoe.gitbooks.io/swiftgo/content/more/open_project.html">
+            
+                    
+                    開啟專案
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.1.4" data-path="../more/interface_intro.html">
+            
+                <a href="https://itisjoe.gitbooks.io/swiftgo/content/more/interface_intro.html">
+            
+                    
+                    介面簡介
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.1.5" data-path="../more/addfile.html">
+            
+                <a href="https://itisjoe.gitbooks.io/swiftgo/content/more/addfile.html">
+            
+                    
+                    新增檔案
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.1.6" data-path="../more/copyfile.html">
+            
+                <a href="https://itisjoe.gitbooks.io/swiftgo/content/more/copyfile.html">
+            
+                    
+                    加入檔案
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.1.7" data-path="../more/deletefile.html">
+            
+                <a href="https://itisjoe.gitbooks.io/swiftgo/content/more/deletefile.html">
+            
+                    
+                    刪除檔案
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.1.8" data-path="../more/addframework.html">
+            
+                <a href="https://itisjoe.gitbooks.io/swiftgo/content/more/addframework.html">
+            
+                    
+                    新增 Framework
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.1.9" data-path="../more/simulator.html">
+            
+                <a href="https://itisjoe.gitbooks.io/swiftgo/content/more/simulator.html">
+            
+                    
+                    使用模擬器及實機測試
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.1.10" data-path="../more/hotkey.html">
+            
+                <a href="https://itisjoe.gitbooks.io/swiftgo/content/more/hotkey.html">
+            
+                    
+                    熱鍵
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.2" data-path="../more/keywords.html">
+            
+                <a href="https://itisjoe.gitbooks.io/swiftgo/content/more/keywords.html">
+            
+                    
+                    系統關鍵字
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.3" data-path="../more/camel_case_naming.html">
+            
+                <a href="https://itisjoe.gitbooks.io/swiftgo/content/more/camel_case_naming.html">
+            
+                    
+                    駝峰式命名法
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" data-path="../about.html">
+            
+                <a href="https://itisjoe.gitbooks.io/swiftgo/content/about.html">
+            
+                    
+                    關於本書
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    
+</ul>
+
+
+                </nav>
+            
+        
+    
+<div class="gl-wrapper">
+    <a class="gitbook-link" href="https://www.gitbook.com/?utm_source=public_site_legacy&amp;utm_medium=referral&amp;utm_campaign=trademark&amp;utm_term=itisjoe&amp;utm_content=powered_by" target="blank">
+        <div class="tm-logo">
+            <svg preserveAspectRatio="xMidYMid meet" height="1em" width="1em" fill="currentColor" viewBox="0 0 1067 769" xmlns="http://www.w3.org/2000/svg" stroke="none" class="icon-7f6730be--text-3f89f380"><g><path d="M480.026 640.677c17.205 0 31.2 13.997 31.2 31.194s-13.995 31.193-31.2 31.193c-17.197 0-31.193-13.996-31.193-31.193 0-17.197 13.996-31.194 31.193-31.194m489.93-193.226c-17.203 0-31.2-13.998-31.2-31.195 0-17.204 13.997-31.2 31.2-31.2 17.198 0 31.194 13.996 31.194 31.2 0 17.197-13.996 31.195-31.193 31.195m0-127.804c-53.269 0-96.609 43.34-96.609 96.609 0 10.373 1.723 20.702 5.123 30.741L559.328 616.879c-18.132-26.128-47.521-41.617-79.302-41.617-36.821 0-70.391 21.065-86.63 54.003L106.68 478.109c-30.288-15.927-52.965-65.817-50.56-111.223 1.248-23.687 9.438-42.071 21.897-49.17 7.916-4.493 17.436-4.099 27.526 1.188l1.916 1.01c75.96 40.022 324.6 170.981 335.063 175.844 16.157 7.47 25.14 10.5 52.659-2.547l513.958-267.3c7.53-2.844 16.315-10.062 16.315-21.023 0-15.205-15.72-21.199-15.765-21.199-29.218-14.018-74.163-35.054-117.987-55.57C798.033 84.26 691.861 34.547 645.23 10.132c-40.253-21.072-72.655-3.311-78.432.282l-11.227 5.555C345.727 119.743 64.898 258.826 48.911 268.553 20.278 285.973 2.547 320.679.252 363.768c-3.586 68.304 31.261 139.506 81.069 165.634l303.172 156.354c6.83 47.306 47.55 82.725 95.532 82.725 52.78 0 95.808-42.546 96.603-95.14L910.541 492.38c16.93 13.233 37.92 20.486 59.416 20.486 53.268 0 96.61-43.341 96.61-96.61s-43.342-96.61-96.61-96.61" fill-rule="evenodd"></path></g></svg>
+        </div>
+        <div class="tm-content">
+            <div class="tm-container">
+                <span class="tm-text">
+                    Powered by <b>GitBook</b>
+                </span>
+            </div>
+        </div>
+    </a>
+</div></div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <a class="btn pull-left js-toolbar-action" aria-label="" href="https://itisjoe.gitbooks.io/swiftgo/content/database/coredata.html#"><i class="fa fa-align-justify"></i></a><div class="dropdown pull-right js-toolbar-action"><a class="btn toggle-dropdown" aria-label="Share" href="https://itisjoe.gitbooks.io/swiftgo/content/database/coredata.html#"><i class="fa fa-share-alt"></i></a><div class="dropdown-menu dropdown-left"><div class="dropdown-caret"><span class="caret-outer"></span><span class="caret-inner"></span></div><div class="buttons"><button class="button size-5 ">Facebook</button><button class="button size-5 ">Google+</button><button class="button size-5 ">Twitter</button><button class="button size-5 ">Weibo</button><button class="button size-5 ">Instapaper</button></div></div></div><a class="btn pull-right js-toolbar-action" aria-label="" href="https://itisjoe.gitbooks.io/swiftgo/content/database/coredata.html#"><i class="fa fa-facebook"></i></a><a class="btn pull-right js-toolbar-action" aria-label="" href="https://itisjoe.gitbooks.io/swiftgo/content/database/coredata.html#"><i class="fa fa-twitter"></i></a><div class="dropdown pull-left font-settings js-toolbar-action"><a class="btn toggle-dropdown" aria-label="Font Settings" href="https://itisjoe.gitbooks.io/swiftgo/content/database/coredata.html#"><i class="fa fa-font"></i></a><div class="dropdown-menu dropdown-right"><div class="dropdown-caret"><span class="caret-outer"></span><span class="caret-inner"></span></div><div class="buttons"><button class="button size-2 font-reduce">A</button><button class="button size-2 font-enlarge">A</button></div><div class="buttons"><button class="button size-2 ">Serif</button><button class="button size-2 ">Sans</button></div><div class="buttons"><button class="button size-3 ">White</button><button class="button size-3 ">Sepia</button><button class="button size-3 ">Night</button></div></div></div><h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="https://itisjoe.gitbooks.io/swiftgo/content/">Core Data</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="core-data">Core Data</h1>
+<p>Core Data 是一個設計用來儲存資料的框架，背後操作的雖然仍是 SQLite ，但其簡化了資料庫的處理，讓你不用了解 SQL 指令也可以快速的為應用程式建立並使用資料庫。</p>
+<p>如果你是第一次接觸資料庫相關的知識，以下會簡單的介紹一下運作方式：</p>
+<p>資料庫顧名思義，是一個用來儲存大量資料的容器，以現實生活來說，最簡單的資料庫可以用一個文件夾來比喻。</p>
+<p>例如，一個<strong>文件夾</strong>是用來存放所有學生的資訊，裡頭<strong>每一頁</strong>都代表一名學生的資訊，每一名學生都會有各式各樣的<strong>資訊</strong>，像是姓名、座號、血型或出生年月日等等。</p>
+<p>以上例子了解後，我們將它與 Core Data 的內容對比在一起，如下：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">現實生活</th>
+<th style="text-align:center">文件夾</th>
+<th style="text-align:center">每一頁學生</th>
+<th style="text-align:center">學生的各個資訊</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">Core Data</td>
+<td style="text-align:center">Entity (實體)</td>
+<td style="text-align:center">每筆資料</td>
+<td style="text-align:center">Attribute (屬性)</td>
+</tr>
+</tbody>
+</table>
+<p>所以假設當我們要為 Core Data 新增一筆資料時，這個步驟為：</p>
+<ol>
+<li>首先找出要操作的 Entity (拿出文件夾)。</li>
+<li>接著將要新增的一筆資料的各個 attribute 設定好(拿出一張新的紙，將一位新學生的基本資料填上)。</li>
+<li>在 Entity 增加這筆資料(為文件夾加入新的一頁，也就是新增這位學生的資訊)。</li>
+<li>儲存這個增加資料的動作(文件整理完畢，將文件夾關上)。</li>
+</ol>
+<h5 id="hint">Hint</h5>
+<ul>
+<li>如果以關聯式資料庫的概念來對比的話， Core Data 的 Entity 與 Attribute 大約可以比對到 Table (資料表)與 Field (欄位)。</li>
+<li>本節僅會介紹基本的功能，實際的資料庫操作可能會更為複雜。</li>
+</ul>
+<p>以下會先介紹在應用程式中如何加入 Core Data ，接著會介紹如何新增、讀取、更新與刪除資料，最後會將 Core Data 功能獨立寫在一個類別中，來把實際操作 Core Data 的程式碼封裝起來。</p>
+<h3 id="加入-core-data">加入 Core Data</h3>
+<p>首先在 Xcode 裡，<a href="https://itisjoe.gitbooks.io/swiftgo/content/more/open_project.html#create_a_new_project">新建一個 <strong>Single View Application</strong> 類型的專案</a>，取名為 ExCoreData 。建立專案的過程中，請記得將<code>Use Core Data</code>打勾，如下圖：</p>
+<p><img src="./Core Data · Swift 起步走_files/coredata01.png" alt="coredata01"></p>
+<h4 id="設定-entity-與-attribute">設定 Entity 與 Attribute</h4>
+<p>建立好專案後，可以看到左邊的專案檔案列表中，有一個名為<code>ExCoreData.xcdatamodeld</code>的檔案，這是用來設定 Entity 與 Attribute 的檔案。請點開這隻檔案並點擊下方的<code>Add Entity</code>按鈕，如下圖：</p>
+<p><img src="./Core Data · Swift 起步走_files/coredata02.png" alt="coredata02"></p>
+<p>接著將這個 Entity 命名為 Student (點擊兩下可命名)，如下圖：</p>
+<p><img src="./Core Data · Swift 起步走_files/coredata03.png" alt="coredata03"></p>
+<p>增加完 Entity 後，接著點擊 Attributes 的加號按鈕，依序增加三個 Attribute ，分別為 id, name, height ， Type 也就是每一個 Attribute 的類型，依序設定為 Integer 32, String, Double ，如下圖：</p>
+<p><img src="./Core Data · Swift 起步走_files/coredata04.png" alt="coredata04"></p>
+<h4 id="建立-entity-的類別">建立 Entity 的類別</h4>
+<p>為了要讓程式碼中可以使用這個 Entity ，接著要建立一個繼承自 NSManagedObject 的 Student 類別。請點選 Xcode 工具列中的<code>Editor &gt; Create NSManagedObject Subclass...</code>來讓 Xcode 為我們自動生成相關檔案，如下：</p>
+<p><img src="./Core Data · Swift 起步走_files/coredata05.png" alt="coredata05"></p>
+<p>接著兩個步驟都是按<code>Next</code>繼續，如下面兩張圖：</p>
+<p><img src="./Core Data · Swift 起步走_files/coredata06.png" alt="coredata06"></p>
+<p><img src="./Core Data · Swift 起步走_files/coredata07.png" alt="coredata07"></p>
+<p>建立檔案的存放路徑時，記得 Language 要選擇 Swift ，並記得 Targets 要打勾，如下圖：</p>
+<p><img src="./Core Data · Swift 起步走_files/coredata08.png" alt="coredata08"></p>
+<p>建立完畢後，就會在左側檔案列表中看到兩隻新檔案，分別為一個繼承自 NSManagedObject 的 Student 類別，以及這個類別的<a href="https://itisjoe.gitbooks.io/swiftgo/content/ch2/extensions.html">擴展</a>，如下：</p>
+<p><img src="./Core Data · Swift 起步走_files/coredata09.png" alt="coredata09"></p>
+<p>這樣就完成了加入 Core Data 的步驟。</p>
+<h3 id="使用-core-data">使用 Core Data</h3>
+<p>接著進入到程式碼的部份，首先宣告一個用來操作 Core Data 的常數：</p>
+<pre><code class="lang-swift"><span class="hljs-comment">// 用來操作 Core Data 的常數</span>
+<span class="hljs-keyword">let</span> moc = (<span class="hljs-type">UIApplication</span>.sharedApplication().delegate
+            <span class="hljs-keyword">as</span>! <span class="hljs-type">AppDelegate</span>).managedObjectContext
+</code></pre>
+<p>在建立專案時如果有打勾<code>Use Core Data</code>，建立完成後會為你自動生成相關程式碼在<code>AppDelegate.swift</code>中，裡面你可以看到操作的資料庫仍然是一個 sqlite 檔案，以及其他建立好的設定。</p>
+<p>所以上述程式是以委任的方式，取得<code>AppDelegate.swift</code>的屬性<code>managedObjectContext</code>，來操作 Core Data 。</p>
+<p>接著宣告一個 Entity 的名稱(記得要與前一小節設定的名稱一樣)，以供後續使用：</p>
+<pre><code class="lang-swift"><span class="hljs-keyword">let</span> myEntityName = <span class="hljs-string">"Student"</span>
+</code></pre>
+<h4 id="新增資料">新增資料</h4>
+<p>新增資料的方式如下：</p>
+<pre><code class="lang-swift"><span class="hljs-comment">// insert</span>
+<span class="hljs-keyword">let</span> student = 
+<span class="hljs-type">NSEntityDescription</span>.insertNewObjectForEntityForName(
+  myEntityName, inManagedObjectContext: moc) 
+  <span class="hljs-keyword">as</span>! <span class="hljs-type">Student</span>
+
+student.id = <span class="hljs-number">1</span>
+student.name = <span class="hljs-string">"小強"</span>
+student.height = <span class="hljs-number">173.2</span>
+
+<span class="hljs-keyword">do</span> {
+    <span class="hljs-keyword">try</span> moc.save()
+} <span class="hljs-keyword">catch</span> {
+    <span class="hljs-built_in">fatalError</span>(<span class="hljs-string">"<span class="hljs-subst">\(error)</span>"</span>)
+}
+</code></pre>
+<p>上述程式經由<code>NSEntityDescription</code>類別的<code>insertNewObjectForEntityForName()</code>方法來新增一筆資訊，這個方法的兩個參數分別為 <strong>Entity 名稱</strong>及一開始宣告的<strong>用來操作 Core Data 的常數</strong>。</p>
+<p>接著這個方法回傳一個 Student 的實體並指派給常數<code>student</code>，這時的進度就與稍前文件夾例子中的 <strong>2. 拿出一張新的紙 </strong>相同，所以接著要將<code>student</code>的各個 attribute 設定好(將一位新學生的基本資料填上)。</p>
+<p>目前已經有一筆新資料了，但尚未將這筆資料儲存，所以接著要使用常數<code>moc</code>的<code>save()</code>方法來儲存資料，而因為這個方法是一個<a href="https://itisjoe.gitbooks.io/swiftgo/content/ch2/error-handling.html">拋出函式</a>，所以<a href="https://itisjoe.gitbooks.io/swiftgo/content/ch2/error-handling.html#error_hadle">使用<code>do-catch</code>語句來定義錯誤的捕獲</a>。</p>
+<p>如果沒有發生錯誤，即是順利儲存一筆新的資料。</p>
+<h4 id="讀取資料">讀取資料</h4>
+<p>讀取資料的方式如下：</p>
+<pre><code class="lang-swift"><span class="hljs-comment">// select</span>
+<span class="hljs-keyword">let</span> request = <span class="hljs-type">NSFetchRequest</span>(entityName: myEntityName)
+
+<span class="hljs-comment">// 依 id 由小到大排序</span>
+request.sortDescriptors = 
+  [<span class="hljs-type">NSSortDescriptor</span>(key: <span class="hljs-string">"id"</span>, ascending: <span class="hljs-literal">true</span>)]
+
+<span class="hljs-keyword">do</span> {
+    <span class="hljs-keyword">let</span> results = 
+    <span class="hljs-keyword">try</span> moc.executeFetchRequest(request) <span class="hljs-keyword">as</span>! [<span class="hljs-type">Student</span>]
+
+    <span class="hljs-keyword">for</span> result <span class="hljs-keyword">in</span> results {
+        <span class="hljs-built_in">print</span>(<span class="hljs-string">"<span class="hljs-subst">\(result.id)</span>. <span class="hljs-subst">\(result.name!)</span>"</span>)
+        <span class="hljs-built_in">print</span>(<span class="hljs-string">"身高： <span class="hljs-subst">\(result.height)</span>"</span>)
+    }
+} <span class="hljs-keyword">catch</span> {
+    <span class="hljs-built_in">fatalError</span>(<span class="hljs-string">"<span class="hljs-subst">\(error)</span>"</span>)
+}
+</code></pre>
+<p>要取得資料首先必須使用類別<code>NSFetchRequest</code>來設置要取得的 Entity ，以用來建立一個取得資料的請求( request )。</p>
+<p>接著其實可以直接取得資料，但這個例子使用了屬性<code>sortDescriptors</code>額外設定取得資料排序的方式，這是一個型別為<code>[NSSortDescriptor]</code>的陣列，可以填入多個排序方式，上述例子中只填入一個<code>NSSortDescriptor(key: "id", ascending: true)</code>，兩個參數依序為<strong>要依照哪一個 attribute 排序</strong>以及<strong>是否由小排到大</strong>。所以這個例子為：取得的資料要依照 <code>id</code> 的值由小排到大。(與關聯式資料庫的 order by 類似。)</p>
+<p>最後使用<code>moc</code>的方法<code>executeFetchRequest()</code>來取得資料，這個方法的參數就是由類別<code>NSFetchRequest</code>返回指派的常數。順利取回的資料會是一個型別為<code>[Student]</code>的陣列，便可以使用<code>for-in</code>迴圈來依序取得每筆資料。</p>
+<h4 id="更新資料">更新資料</h4>
+<p>更新資料的方式如下：</p>
+<pre><code class="lang-swift"><span class="hljs-comment">// update</span>
+<span class="hljs-keyword">let</span> request = <span class="hljs-type">NSFetchRequest</span>(entityName: myEntityName)
+request.predicate = <span class="hljs-literal">nil</span>
+<span class="hljs-keyword">let</span> updateID = <span class="hljs-number">1</span>
+request.predicate = 
+  <span class="hljs-type">NSPredicate</span>(format: <span class="hljs-string">"id = <span class="hljs-subst">\(updateID)</span>"</span>)
+
+<span class="hljs-keyword">do</span> {
+    <span class="hljs-keyword">let</span> results = 
+      <span class="hljs-keyword">try</span> moc.executeFetchRequest(request) 
+      <span class="hljs-keyword">as</span>! [<span class="hljs-type">Student</span>]
+
+    <span class="hljs-keyword">if</span> results.<span class="hljs-built_in">count</span> &gt; <span class="hljs-number">0</span> {
+        results[<span class="hljs-number">0</span>].height = <span class="hljs-number">155</span>
+        <span class="hljs-keyword">try</span> moc.save()
+    }
+} <span class="hljs-keyword">catch</span> {
+    <span class="hljs-built_in">fatalError</span>(<span class="hljs-string">"<span class="hljs-subst">\(error)</span>"</span>)
+}
+</code></pre>
+<p>更新資料前需要先讀取資料，所以一開始與稍前的程式碼類似，同樣使用類別<code>NSFetchRequest</code>來設置要取得的 Entity ，以建立一個取得資料的請求( request )。</p>
+<p>除了稍前介紹可以額外設定排序方式，這邊示範另一個屬性<code>predicate</code>，這可以讓你設定取得資料的條件，例如這個例子設定條件為<code>NSPredicate(format: "id = 1")</code>：取得<code>id = 1</code>的資料。(與關聯式資料庫的 where 條件類似。)</p>
+<p>接著與稍前例子一樣，使用<code>moc.executeFetchRequest()</code>來取得資料，而這個例子因為是要更新資料，所以在順利取得後，將要更新的屬性設置完畢，再以<code>moc.save()</code>來儲存這個更新的動作。</p>
+<h5 id="hint">Hint</h5>
+<ul>
+<li>這個例子中的<code>request.predicate = nil</code>不是必須的，是用來提醒你，如果有多個查詢資料庫的需求，在每次新的查詢要設定屬性<code>predicate</code>前，要先將其設置為<code>nil</code>以清空查詢條件。</li>
+<li>如果查詢條件的類型為 text ，記得參數<code>format</code>中要將該值以單引號<code>'</code>包含起來，像是<code>NSPredicate(format: "name = '小強'")</code>這樣。</li>
+</ul>
+<h4 id="刪除資料">刪除資料</h4>
+<p>刪除資料方式如下：</p>
+<pre><code class="lang-swift"><span class="hljs-comment">// delete</span>
+<span class="hljs-keyword">let</span> request = <span class="hljs-type">NSFetchRequest</span>(entityName: myEntityName)
+request.predicate = <span class="hljs-literal">nil</span>
+<span class="hljs-keyword">let</span> deleteID = <span class="hljs-number">3</span>
+request.predicate = 
+  <span class="hljs-type">NSPredicate</span>(format: <span class="hljs-string">"id = <span class="hljs-subst">\(deleteID)</span>"</span>)
+
+<span class="hljs-keyword">do</span> {
+    <span class="hljs-keyword">let</span> results = 
+      <span class="hljs-keyword">try</span> moc.executeFetchRequest(request) 
+      <span class="hljs-keyword">as</span>! [<span class="hljs-type">Student</span>]
+
+    <span class="hljs-keyword">for</span> result <span class="hljs-keyword">in</span> results {
+        moc.deleteObject(result)
+    }
+    <span class="hljs-keyword">try</span> moc.save()
+
+} <span class="hljs-keyword">catch</span> {
+    <span class="hljs-built_in">fatalError</span>(<span class="hljs-string">"<span class="hljs-subst">\(error)</span>"</span>)
+}
+</code></pre>
+<p>刪除資料與更新資料的方式類似，所以請參考稍前的例子，主要注意到<code>moc.deleteObject()</code>這個方法是用來刪除資料，而最後仍然要記得使用<code>moc.save()</code>來儲存這個刪除的動作。</p>
+<p>以上便為基本操作 Core Data 的方式。</p>
+<h3 id="將-core-data-功能獨立出來">將 Core Data 功能獨立出來</h3>
+<p>這一小節會將 Core Data 功能獨立寫在一個類別中，來把實際操作 Core Data 的程式碼封裝起來，這樣一般在使用時就不會使用到 Core Data 相關的類別或函式。</p>
+<p>首先以<a href="https://itisjoe.gitbooks.io/swiftgo/content/more/addfile.html">新增檔案</a>的方式加入一個<code>.swift</code>檔案，命名為<code>CoreDataConnect.swift</code>，記得檔案類型要選擇<code>Swift File</code>：</p>
+<p><code>iOS &gt; Source &gt; Swift File</code></p>
+<p>接著打開這隻檔案，先建立一個類別及其內的屬性跟建構器：(記得要先<code>import CoreData</code>)</p>
+<pre><code class="lang-swift"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">CoreDataConnect</span> </span>{
+    <span class="hljs-keyword">var</span> moc :<span class="hljs-type">NSManagedObjectContext</span>!
+    <span class="hljs-keyword">typealias</span> <span class="hljs-type">MyType</span> = <span class="hljs-type">Record</span>
+
+    <span class="hljs-keyword">init</span>(moc:<span class="hljs-type">NSManagedObjectContext</span>) {
+        <span class="hljs-keyword">self</span>.moc = moc
+    }
+
+}
+</code></pre>
+<p>上述程式中，使用<code>typealias</code>的特性設置一個型別別名，這樣在後續的資料操作，使用這個別名<code>MyType</code>即可，不用使用原始的 Entity 名稱<code>Record</code>。</p>
+<h4 id="新增資料">新增資料</h4>
+<p>首先在上面這個類別中，定義新增資料的方法：</p>
+<pre><code class="lang-swift"><span class="hljs-comment">// insert</span>
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">insert</span><span class="hljs-params">(myEntityName:String, 
+  attributeInfo:[String:String])</span></span> -&gt; <span class="hljs-type">Bool</span> {
+    <span class="hljs-keyword">let</span> insetData =
+  <span class="hljs-type">NSEntityDescription</span>.insertNewObjectForEntityForName(
+    myEntityName, inManagedObjectContext: <span class="hljs-keyword">self</span>.moc)
+    <span class="hljs-keyword">as</span>! <span class="hljs-type">MyType</span>
+
+    <span class="hljs-keyword">for</span> (key,value) <span class="hljs-keyword">in</span> attributeInfo {
+        <span class="hljs-keyword">let</span> t =
+insetData.entity.attributesByName[key]?.attributeType
+
+        <span class="hljs-keyword">if</span> t == .<span class="hljs-type">Integer16AttributeType</span> 
+        || t == .<span class="hljs-type">Integer32AttributeType</span> 
+        || t == .<span class="hljs-type">Integer64AttributeType</span> {
+            insetData.setValue(<span class="hljs-type">Int</span>(value), 
+              forKey: key)
+        } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> t == .<span class="hljs-type">DoubleAttributeType</span> 
+        || t == .<span class="hljs-type">FloatAttributeType</span> {
+            insetData.setValue(<span class="hljs-type">Double</span>(value), 
+              forKey: key)
+        } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> t == .<span class="hljs-type">BooleanAttributeType</span> {
+            insetData.setValue(
+            (value == <span class="hljs-string">"true"</span> ? <span class="hljs-literal">true</span> : <span class="hljs-literal">false</span>), 
+            forKey: key)
+        } <span class="hljs-keyword">else</span> {
+            insetData.setValue(value, forKey: key)
+        }
+    }
+
+    <span class="hljs-keyword">do</span> {
+        <span class="hljs-keyword">try</span> moc.save()
+
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>
+    } <span class="hljs-keyword">catch</span> {
+        <span class="hljs-built_in">fatalError</span>(<span class="hljs-string">"<span class="hljs-subst">\(error)</span>"</span>)
+    }
+
+    <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>
+}
+</code></pre>
+<p>這個方法與稍前介紹新增資料時的程式碼一樣，有一點要注意的是，這邊因為其中一個傳入的參數：<strong>要新增的 attribute 及其值</strong>，是統一以字串傳入，所以這個方法內需要根據 attribute 的類型<code>student.entity.attributesByName[key]?.attributeType</code>來轉換型別為 Int, Double, Bool 或是原本的字串，再以方法
+<code>setValue(_,forKey:)</code>設置值並儲存。</p>
+<h4 id="讀取資料">讀取資料</h4>
+<p>接著定義讀取資料的方法：</p>
+<pre><code class="lang-swift"><span class="hljs-comment">// select</span>
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">fetch</span><span class="hljs-params">(myEntityName:String, predicate:String?,
+<span class="hljs-built_in">sort</span>:[[String:Bool]]?, limit:Int?)</span></span> -&gt; [<span class="hljs-type">MyType</span>]? {
+    <span class="hljs-keyword">let</span> request = <span class="hljs-type">NSFetchRequest</span>(
+      entityName: myEntityName)
+
+    <span class="hljs-comment">// predicate</span>
+    <span class="hljs-keyword">if</span> <span class="hljs-keyword">let</span> myPredicate = predicate {
+        request.predicate = 
+          <span class="hljs-type">NSPredicate</span>(format: myPredicate)
+    }
+
+    <span class="hljs-comment">// sort</span>
+    <span class="hljs-keyword">if</span> <span class="hljs-keyword">let</span> mySort = <span class="hljs-built_in">sort</span> {
+        <span class="hljs-keyword">var</span> sortArr :[<span class="hljs-type">NSSortDescriptor</span>] = []
+        <span class="hljs-keyword">for</span> sortCond <span class="hljs-keyword">in</span> mySort {
+            <span class="hljs-keyword">for</span> (k, v) <span class="hljs-keyword">in</span> sortCond {
+                sortArr.append(
+                  <span class="hljs-type">NSSortDescriptor</span>(
+                    key: k, ascending: v))
+            }
+        }
+
+        request.sortDescriptors = sortArr
+    }
+
+    <span class="hljs-comment">// limit</span>
+    <span class="hljs-keyword">if</span> <span class="hljs-keyword">let</span> limitNumber = limit {
+        request.fetchLimit = limitNumber
+    }
+
+    <span class="hljs-keyword">do</span> {
+        <span class="hljs-keyword">let</span> results = 
+          <span class="hljs-keyword">try</span> moc.executeFetchRequest(request) 
+          <span class="hljs-keyword">as</span>! [<span class="hljs-type">MyType</span>]
+
+        <span class="hljs-keyword">return</span> results
+    } <span class="hljs-keyword">catch</span> {
+        <span class="hljs-built_in">fatalError</span>(<span class="hljs-string">"<span class="hljs-subst">\(error)</span>"</span>)
+    }
+
+    <span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>
+}
+</code></pre>
+<p>讀取資料的方法將講過的兩個額外查詢功能：查詢條件<code>predicate</code>與排序方式<code>sortDescriptors</code>以及限制查詢筆數<code>fetchLimit</code>都加入，並將其都設為<a href="https://itisjoe.gitbooks.io/swiftgo/content/ch1/types.html#optional_type">可選型別</a>，這樣如果不需要時填入<code>nil</code>即可，返回的是一個型別為<code>[Student]</code>的陣列。</p>
+<h4 id="更新資料">更新資料</h4>
+<p>定義更新資料的方法：</p>
+<pre><code class="lang-swift">// update
+func update(myEntityName:String, predicate:String?,'
+attributeInfo:[String:String]) -&gt; Bool {
+    if let results = self.fetch(
+      myEntityName, 
+      predicate: predicate, sort: nil, limit: nil) {
+        for result in results {
+            for (key,value) in attributeInfo {
+                let t =
+  result.entity.attributesByName[key]?.attributeType
+
+                if t == .Integer16AttributeType 
+                || t == .Integer32AttributeType 
+                || t == .Integer64AttributeType {
+                    result.setValue(
+                      Int(value), forKey: key)
+                } else if t == .DoubleAttributeType
+                || t == .FloatAttributeType {
+                    result.setValue(
+                      Double(value), forKey: key)
+                } else if t == .BooleanAttributeType {
+                    result.setValue(
+                    (value == "true" ? true : false),
+                    forKey: key)
+                } else {
+                    result.setValue(
+                      value, forKey: key)
+                }
+            }
+        }
+
+        do {
+            try self.moc.save()
+
+            return true
+        } catch {
+            fatalError("\(error)")
+        }
+    }
+
+    return false
+}
+</code></pre>
+<p>這邊會先以讀取資料方法，取得要更新的資料，再將各 attribute 設置好後才再儲存，與新增資料相同，統一以字串傳入，所以需要根據 attribute 類型來轉換型別。</p>
+<h4 id="刪除資料">刪除資料</h4>
+<p>定義刪除資料的方法：</p>
+<pre><code class="lang-swift"><span class="hljs-comment">// delete</span>
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">delete</span><span class="hljs-params">(myEntityName:String, predicate:String?)</span></span>
+-&gt; <span class="hljs-type">Bool</span> {
+    <span class="hljs-keyword">if</span> <span class="hljs-keyword">let</span> results = <span class="hljs-keyword">self</span>.fetch(myEntityName,
+    predicate: predicate, <span class="hljs-built_in">sort</span>: <span class="hljs-literal">nil</span>, limit: <span class="hljs-literal">nil</span>) {
+        <span class="hljs-keyword">for</span> result <span class="hljs-keyword">in</span> results {
+            <span class="hljs-keyword">self</span>.moc.deleteObject(result)
+        }
+
+        <span class="hljs-keyword">do</span> {
+            <span class="hljs-keyword">try</span> <span class="hljs-keyword">self</span>.moc.save()
+
+            <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>
+        } <span class="hljs-keyword">catch</span> {
+            <span class="hljs-built_in">fatalError</span>(<span class="hljs-string">"<span class="hljs-subst">\(error)</span>"</span>)
+        }
+    }
+
+    <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>
+}
+</code></pre>
+<p>這邊會先以讀取資料方法，取得要刪除的資料，再將取得的資料刪除，並儲存刪除的動作。</p>
+<h4 id="使用這個類別">使用這個類別</h4>
+<p>將 Core Data 功能寫在一個類別後，接著將 ViewController.swift 的<code>viewDidLoad()</code>內容改寫為：</p>
+<pre><code class="lang-swift"><span class="hljs-keyword">let</span> myEntityName = <span class="hljs-string">"Student"</span>
+<span class="hljs-keyword">let</span> coreDataConnect = <span class="hljs-type">CoreDataConnect</span>(moc: <span class="hljs-keyword">self</span>.moc)
+
+<span class="hljs-comment">// auto increment</span>
+<span class="hljs-keyword">let</span> myUserDefaults =
+  <span class="hljs-type">NSUserDefaults</span>.standardUserDefaults()
+<span class="hljs-keyword">var</span> seq = <span class="hljs-number">1</span>
+<span class="hljs-keyword">if</span> <span class="hljs-keyword">let</span> idSeq = myUserDefaults.objectForKey(<span class="hljs-string">"idSeq"</span>) 
+  <span class="hljs-keyword">as</span>? <span class="hljs-type">Int</span> {
+    seq = idSeq + <span class="hljs-number">1</span>
+}
+
+<span class="hljs-comment">// insert</span>
+<span class="hljs-keyword">let</span> insertResult = coreDataConnect.insert(
+    myEntityName, attributeInfo: [
+        <span class="hljs-string">"id"</span> : <span class="hljs-string">"<span class="hljs-subst">\(seq)</span>"</span>,
+        <span class="hljs-string">"name"</span> : <span class="hljs-string">"'小強'"</span>,
+        <span class="hljs-string">"height"</span> : <span class="hljs-string">"176.1"</span>
+    ])
+<span class="hljs-keyword">if</span> insertResult {
+    <span class="hljs-built_in">print</span>(<span class="hljs-string">"新增資料成功"</span>)
+
+    myUserDefaults.setObject(seq, forKey: <span class="hljs-string">"idSeq"</span>)
+    myUserDefaults.synchronize()
+}
+
+<span class="hljs-comment">// select</span>
+<span class="hljs-keyword">let</span> selectResult = coreDataConnect.fetch(
+  myEntityName, 
+  predicate: <span class="hljs-literal">nil</span>, <span class="hljs-built_in">sort</span>: [[<span class="hljs-string">"id"</span>:<span class="hljs-literal">true</span>]], limit: <span class="hljs-literal">nil</span>)
+<span class="hljs-keyword">if</span> <span class="hljs-keyword">let</span> results = selectResult {
+    <span class="hljs-keyword">for</span> result <span class="hljs-keyword">in</span> results {
+        <span class="hljs-built_in">print</span>(<span class="hljs-string">"<span class="hljs-subst">\(result.id)</span>. <span class="hljs-subst">\(result.name!)</span>"</span>)
+        <span class="hljs-built_in">print</span>(<span class="hljs-string">"身高： <span class="hljs-subst">\(result.height)</span>"</span>)
+    }
+}
+
+<span class="hljs-comment">// update</span>
+<span class="hljs-keyword">let</span> updateName = <span class="hljs-string">"二強"</span>
+<span class="hljs-keyword">var</span> predicate = <span class="hljs-string">"name = '<span class="hljs-subst">\(updateName)</span>'"</span>
+<span class="hljs-keyword">let</span> updateResult = coreDataConnect.update(
+  myEntityName, 
+  predicate: predicate, 
+  attributeInfo: [<span class="hljs-string">"height"</span>:<span class="hljs-string">"162.2"</span>])
+<span class="hljs-keyword">if</span> updateResult {
+    <span class="hljs-built_in">print</span>(<span class="hljs-string">"更新資料成功"</span>)
+}
+
+<span class="hljs-comment">// delete</span>
+<span class="hljs-keyword">let</span> deleteID = <span class="hljs-number">2</span>
+predicate = <span class="hljs-string">"id = <span class="hljs-subst">\(deleteID)</span>"</span>
+<span class="hljs-keyword">let</span> deleteResult = coreDataConnect.delete(
+  myEntityName, predicate: predicate)
+<span class="hljs-keyword">if</span> deleteResult {
+    <span class="hljs-built_in">print</span>(<span class="hljs-string">"刪除資料成功"</span>)
+}
+</code></pre>
+<p>上述程式可以發現已經看不到操作 Core Data 相關的類別與函式，因為已經都寫在 CoreDataConnect.swift 中了。</p>
+<p>其中要提醒的是，因為 Core Data 沒有提供 auto increment 的功能(每次新增資料都自動為其中一個 attribute 遞增的功能)，所以這邊以<code>NSUserDefaults</code>儲存一個數值來手動建立 auto increment 功能，每次新增資料成功時都將這個值加一，下次新增時會再取出這個值來使用。</p>
+<p>以上便為本節範例的內容。</p>
+<h3 id="範例">範例</h3>
+<p>本節範例程式碼放在 <a href="https://github.com/itisjoe/swiftgo_files/tree/master/database/coredata" target="_blank">database/coredata</a></p>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class="search-results-count"></span> results matching "<span class="search-query"></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class="search-query"></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="https://itisjoe.gitbooks.io/swiftgo/content/database/sqlite.html" class="navigation navigation-prev " aria-label="Previous page: SQLite">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="https://itisjoe.gitbooks.io/swiftgo/content/apps/apps.html" class="navigation navigation-next " aria-label="Next page: iPhone Apps" style="margin-right: 0px;">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Core Data","level":"1.5.2","depth":2,"next":{"title":"iPhone Apps","level":"1.6","depth":1,"path":"apps/apps.md","ref":"apps/apps.md","articles":[{"title":"待辦事項","level":"1.6.1","depth":2,"path":"apps/todo/todo.md","ref":"apps/todo/todo.md","articles":[{"title":"規劃與實作","level":"1.6.1.1","depth":3,"path":"apps/todo/intro.md","ref":"apps/todo/intro.md","articles":[]},{"title":"程式之外的設定","level":"1.6.1.2","depth":3,"path":"apps/todo/settings.md","ref":"apps/todo/settings.md","articles":[]},{"title":"播放音效","level":"1.6.1.3","depth":3,"path":"apps/todo/sound.md","ref":"apps/todo/sound.md","articles":[]},{"title":"UITableView 的編輯模式","level":"1.6.1.4","depth":3,"path":"apps/todo/edituitableview.md","ref":"apps/todo/edituitableview.md","articles":[]}]},{"title":"遊玩臺北","level":"1.6.2","depth":2,"path":"apps/taipeitravel/taipeitravel.md","ref":"apps/taipeitravel/taipeitravel.md","articles":[{"title":"規劃與實作","level":"1.6.2.1","depth":3,"path":"apps/taipeitravel/intro.md","ref":"apps/taipeitravel/intro.md","articles":[]},{"title":"取得遠端 API 資料並儲存","level":"1.6.2.2","depth":3,"path":"apps/taipeitravel/fetchdataandstorage.md","ref":"apps/taipeitravel/fetchdataandstorage.md","articles":[]},{"title":"地圖與定位","level":"1.6.2.3","depth":3,"path":"apps/taipeitravel/map.md","ref":"apps/taipeitravel/map.md","articles":[]}]},{"title":"記帳","level":"1.6.3","depth":2,"path":"apps/money/money.md","ref":"apps/money/money.md","articles":[{"title":"規劃與實作","level":"1.6.3.1","depth":3,"path":"apps/money/intro.md","ref":"apps/money/intro.md","articles":[]}]}]},"previous":{"title":"SQLite","level":"1.5.1","depth":2,"path":"database/sqlite.md","ref":"database/sqlite.md","articles":[]},"dir":"ltr"},"config":{"plugins":["comment"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"comment":{"highlightCommented":true},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Hsin","pdf":{"pageNumbers":true,"fontSize":16,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Swift 起步走","language":"zh","links":{"sidebar":{"Swift 起步走":"https://www.gitbook.com/book/itisjoe/swiftgo"},"gitbook":true},"gitbook":"*","description":"從 Swift 基礎入門到實戰 iPhone App"},"file":{"path":"database/coredata.md","mtime":"2016-12-06T06:00:53.000Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-01-19T05:48:36.367Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="./Core Data · Swift 起步走_files/gitbook.js"></script>
+    <script src="./Core Data · Swift 起步走_files/theme.js"></script>
+    
+        
+        <script src="./Core Data · Swift 起步走_files/plugin.js"></script>
+        
+    
+        
+        <script src="./Core Data · Swift 起步走_files/search-engine.js"></script>
+        
+    
+        
+        <script src="./Core Data · Swift 起步走_files/search.js"></script>
+        
+    
+        
+        <script src="./Core Data · Swift 起步走_files/lunr.min.js"></script>
+        
+    
+        
+        <script src="./Core Data · Swift 起步走_files/search-lunr.js"></script>
+        
+    
+        
+        <script src="./Core Data · Swift 起步走_files/buttons.js"></script>
+        
+    
+        
+        <script src="./Core Data · Swift 起步走_files/fontsettings.js"></script>
+        
+    
+
+    
+
+
+</body><grammarly-desktop-integration data-grammarly-shadow-root="true"></grammarly-desktop-integration></html>
